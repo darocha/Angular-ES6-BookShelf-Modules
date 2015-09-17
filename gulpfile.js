@@ -1,7 +1,10 @@
 var gulp = require('gulp'),
     server = require('gulp-express'),
     babel = require('gulp-babel'),
-    browserify = require('gulp-browserify'),
+    browserify = require('browserify'),
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer'),
     rename=require('gulp-rename'),
     uglify=require('gulp-uglify'),
     requirejs = require('gulp-requirejs'),
@@ -30,8 +33,9 @@ gulp.task('es6-commonjs',['clean-temp'], function(){
 });
 
 gulp.task('commonjs-bundle',['bundle-commonjs-clean','es6-commonjs'], function(){
-    return gulp.src(['dest/temp/bootstrap.js'])
-        .pipe(browserify())
+    return browserify(['dest/temp/bootstrap.js']).bundle()
+        .pipe(source('app.js'))
+        .pipe(buffer())
         .pipe(uglify())
         .pipe(rename('app.js'))
         .pipe(gulp.dest("es5/commonjs"));
