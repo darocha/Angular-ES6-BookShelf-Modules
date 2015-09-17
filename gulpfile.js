@@ -4,8 +4,8 @@ var gulp = require('gulp'),
     browserify = require('gulp-browserify'),
     rename=require('gulp-rename'),
     uglify=require('gulp-uglify'),
-    rimraf = require('gulp-rimraf'),
-    requirejs = require('gulp-requirejs');
+    requirejs = require('gulp-requirejs'),
+    del = require('del');
 
 gulp.task('server', function () {
     return server.run({
@@ -14,13 +14,11 @@ gulp.task('server', function () {
 });
 
 gulp.task('bundle-commonjs-clean', function(){
-    return gulp.src(['es5/commonjs'])
-    .pipe(rimraf());
+    return del(['es5/commonjs']);
 });
 
 gulp.task('bundle-amd-clean', function(){
-    return gulp.src(['es5/amd'])
-    .pipe(rimraf());
+    return del(['es5/amd']);
 });
 
 gulp.task('es6-commonjs',['clean-temp'], function(){
@@ -58,8 +56,7 @@ gulp.task('amd-bundle',['bundle-amd-clean','es6-amd'], function(done){
 });
 
 gulp.task('clean-temp', function(){
-    return gulp.src(['dest'])
-                .pipe(rimraf());
+    return del(['dest']);
 });
 
 gulp.task('amd', ['amd-bundle','server']);
