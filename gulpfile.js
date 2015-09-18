@@ -53,7 +53,7 @@ gulp.task('amd-bundle',['bundle-amd-clean','es6-amd'], function(done){
     return requirejs({
             name:"bootstrap",
             baseUrl:'dest/temp',
-            out:'app.js'  
+            out:'app.js'
             })
         .pipe(uglify())
         .pipe(gulp.dest("es5/amd"));
